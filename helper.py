@@ -88,9 +88,13 @@ def view_classify(img, ps, version="MNIST"):
                             'Sneaker',
                             'Bag',
                             'Ankle Boot'], size='small');
-    elif version == "Custom":  #  New version for letters
-        ax2.set_yticklabels(np.arange(26).astype(str) + chr(65), size='small')  # A-Z labels
-
+    elif version == "Letter":  #  New version for letters
+        #changing list of classes
+        ax2.barh(np.arange(26), ps)
+        ax2.set_yticks(np.arange(26))
+        #listing A-Z classes
+        ax2.set_yticklabels(list(map(chr, range(65, 91))), size='small')  # A-Z labels
+        ax2.set_xlabel('Probability')
 
     ax2.set_title('Class Probability')
     ax2.set_xlim(0, 1.1)
