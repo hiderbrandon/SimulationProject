@@ -88,7 +88,46 @@ def view_classify(img, ps, version="MNIST"):
                             'Sneaker',
                             'Bag',
                             'Ankle Boot'], size='small');
+    elif version == "Letter":  #  New version for letters
+        #changing list of classes
+        ax2.barh(np.arange(26), ps)
+        ax2.set_yticks(np.arange(26))
+        #listing A-Z classes
+        ax2.set_yticklabels(list(map(chr, range(65, 91))), size='small')  # A-Z labels
+        ax2.set_xlabel('Probability')
+
     ax2.set_title('Class Probability')
     ax2.set_xlim(0, 1.1)
 
     plt.tight_layout()
+
+def view_classify_letters (img, ps, version="Letter"):
+    """
+    Function for viewing an image and its predicted letter probabilities.
+
+    Args:
+        img: The input image as a PyTorch tensor.
+        ps: The predicted probabilities as a PyTorch tensor.
+        version: The version of the dataset (default: "Letter").
+    """
+
+    ps = ps.data.numpy().squeeze()
+
+    fig, (ax1, ax2) = plt.subplots(figsize=(6, 9), ncols=2)
+
+    # Display the image
+    ax1.imshow(img.resize_(1, 28, 28).numpy().squeeze())
+    ax1.axis('off')
+    ax1.set_title('Input Image')
+
+    # Display the probability bar chart
+    ax2.barh(np.arange(26), ps)
+    ax2.set_aspect(0.1)
+    ax2.set_yticks(np.arange(26))
+    ax2.set_yticklabels(list(map(chr, range(65, 91))), size='small')  # A-Z labels
+    ax2.set_xlabel('Probability')
+    ax2.set_title('Predicted Probabilities')
+    ax2.set_xlim(0, 1.1)
+
+    plt.tight_layout()
+    plt.show()
